@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const App = (props) => {
   const [state, setState] = useState(props);
   const { name, price } = state;
-  const reset = () => {
-    setState(props);
-  };
+
+  useEffect(() => {
+    console.log("This is like componentDidMount or componentDisUpdate");
+  });
+
+  useEffect(() => {
+    console.log("This is like componentDidMount");
+  }, []);
+
+  useEffect(() => {
+    console.log("This callbsck id for name only.");
+  }, [name]);
 
   return (
     <>
       <p>
-        現在の{name}は{price}円です
+        現在の{name}は{price}円です。
       </p>
       <button onClick={() => setState({ ...state, price: price + 1 })}>
         +1
@@ -18,7 +27,7 @@ const App = (props) => {
       <button onClick={() => setState({ ...state, price: price - 1 })}>
         -1
       </button>
-      <button onClick={reset}>Reset</button>
+      <button onClick={() => setState(props)}>Reset</button>
       <input
         value={name}
         onChange={(e) => setState({ ...state, name: e.target.value })}
